@@ -11,7 +11,7 @@
   - [ ] RPC Error 해결
   - [ ] 웹 디자인 정리
   
--Lottery
+- Lottery
 
   - [x] 현재 라운드 정보 표시
   
