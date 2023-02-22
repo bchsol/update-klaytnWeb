@@ -15,7 +15,9 @@
 -Lottery
 
   [x] 현재 라운드 정보 표시
+  
   [x] 티켓 구매 Modal
+  
   [x] 티켓 구매 트랜잭션 
 
 ## Contract
