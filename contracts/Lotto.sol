@@ -102,7 +102,7 @@ contract Lottery is Ownable {
     rounds[rounds.length - 1].totalQuantity += 1;
   }
 
-  function buy(uint256[6] memory numbers) public  roundEnd() payable {
+  function buy(uint256[6] memory numbers) public payable {
     require(rounds[rounds.length - 1].endTime >= block.timestamp, "Round End");
     require(rounds[rounds.length - 1].status != RoundStatus.End, "Round End");
     require(msg.value == TICKET_PRICE, "Not valid value");

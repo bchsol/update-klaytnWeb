@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Row, Col, Card, Button } from "react-bootstrap";
 import * as s from "../Style/globalStyles";
 import { fetchNfts, fetchStakeNfts } from "../caver/FetchNfts";
@@ -8,78 +8,108 @@ import { StakeContract, NFTContract, caver } from "../caver/UseCaver";
 const Staking = () => {
   const [nfts, setNfts] = useState([]);
   const [stakeNfts, setStakeNfts] = useState([]);
-  const [myAddress, setMyAddress] = useState(
-    window.sessionStorage.getItem("address") || ""
-  );
   const [rewardTokens, setRewardTokens] = useState(0);
 
-  const fetchMyNfts = async () => {
-    if (myAddress === "undefined") {
-      alert("No Address");
-      return;
-    }
-    const _nfts = await fetchNfts(myAddress);
-    setNfts(_nfts);
-
-    const _stakeNfts = await fetchStakeNfts(myAddress);
-    setStakeNfts(_stakeNfts);
-  };
-
-  useEffect(() => {
-    if (myAddress !== "") {
-      fetchMyNfts();
-      rewardToken();
-    }
-  }, [StakeContract.methods]);
+  const [userAddress, setUserAddress] = useState("");
 
   useEffect(() => {
     const currentAddress = window.klaytn.selectedAddress;
-
-    if (myAddress !== currentAddress) {
-      window.sessionStorage.setItem("address", currentAddress);
-      setMyAddress(currentAddress);
+    if (userAddress !== currentAddress) {
+      setUserAddress(currentAddress);
+      localStorage.setItem("userAddress", currentAddress);
     }
-  }, []);
+  }, [userAddress]);
 
-  const stake = async (tokenId) => {
+  const fetchMyNfts = useCallback(async () => {
+    const [_nfts, _stakeNfts] = await Promise.all([
+      fetchNfts(userAddress),
+      fetchStakeNfts(userAddress),
+    ]);
+    setNfts(_nfts);
+    setStakeNfts(_stakeNfts);
+  }, [userAddress]);
+
+  useEffect(() => {
+    if (userAddress !== "") {
+      fetchMyNfts();
+      rewardToken();
+    }
+  }, [fetchMyNfts]);
+
+  const approveNFT = async () => {
     const approve = await NFTContract.methods
-      .isApprovedForAll(StakeContract._address, myAddress)
+      .isApprovedForAll(StakeContract._address, userAddress)
       .call();
 
     if (!approve) {
-      // Approval Contract
-      caver.klay
-        .sendTransaction({
-          from: myAddress,
-          to: NFTContract._address,
-          data: NFTContract.methods
-            .setApprovalForAll(StakeContract._address, true)
-            .encodeABI(),
-          gas: "300000",
-        })
-        .once("receipt", (receipt) => {
-          console.log("receipt", receipt);
-        })
-        .once("error", (error) => {
-          console.log("error", error);
-        });
+      return caver.klay.sendTransaction({
+        from: userAddress,
+        to: NFTContract._address,
+        data: NFTContract.methods
+          .setApprovalForAll(StakeContract._address, true)
+          .encodeABI(),
+        gas: "300000",
+      });
     }
+  };
+
+  const executeTransaction = (contract, method, encodeABI, gas = "300000") => {
+    return caver.klay.sendTransaction({
+      type: "SMART_CONTRACT_EXECUTE",
+      from: userAddress,
+      to: contract._address,
+      data: method.encodeABI(),
+      gas,
+    });
+  };
+
+  const stake = async (tokenId) => {
+    // const approve = await NFTContract.methods
+    //   .isApprovedForAll(StakeContract._address, userAddress)
+    //   .call();
+
+    await approveNFT();
+
+    return executeTransaction(
+      StakeContract,
+      StakeContract.methods.stake(tokenId),
+      "SMART_CONTRACT_EXECUTION"
+    );
+
+    // if (!approve) {
+    //   // Approval Contract
+    //   caver.klay
+    //     .sendTransaction({
+    //       from: userAddress,
+    //       to: NFTContract._address,
+    //       data: NFTContract.methods
+    //         .setApprovalForAll(StakeContract._address, true)
+    //         .encodeABI(),
+    //       gas: "300000",
+    //     })
+    //     .once("receipt", (receipt) => {
+    //       console.log("receipt", receipt);
+    //     })
+    //     .once("error", (error) => {
+    //       console.log("error", error);
+    //     });
+    //}
 
     // Stake Contract
-    caver.klay
-      .sendTransaction({
-        type: "SMART_CONTRACT_EXECUTION",
-        from: myAddress,
-        to: StakeContract._address,
-        data: StakeContract.methods.stake(tokenId).encodeABI(),
-        gas: "300000",
-      })
-      .once("receipt", (receipt) => {
-        console.log("receipt", receipt);
-      })
-      .once("error", (error) => {
-        console.log("error", error);
-      });
+    // caver.klay
+    //   .sendTransaction({
+    //     type: "SMART_CONTRACT_EXECUTION",
+    //     from: userAddress,
+    //     to: StakeContract._address,
+    //     data: StakeContract.methods.stake(tokenId).encodeABI(),
+    //     gas: "300000",
+    //   })
+    //   .once("receipt", (receipt) => {
+    //     console.log("receipt", receipt);
+    //   })
+    //   .once("error", (error) => {
+    //     console.log("error", error);
+    //   });
   };
 
   const unstake = async (tokenId) => {
@@ -87,7 +117,7 @@ const Staking = () => {
     caver.klay
       .sendTransaction({
         type: "SMART_CONTRACT_EXECUTION",
-        from: myAddress,
+        from: userAddress,
         to: StakeContract._address,
         data: StakeContract.methods.unstake(tokenId).encodeABI(),
         gas: "300000",
@@ -105,7 +135,7 @@ const Staking = () => {
     caver.klay
       .sendTransaction({
         type: "SMART_CONTRACT_EXECUTION",
-        from: myAddress,
+        from: userAddress,
         to: StakeContract._address,
         data: StakeContract.methods.claim().encodeABI(),
         gas: "300000",
@@ -118,27 +148,8 @@ const Staking = () => {
       });
   };
 
-  const test = async () => {
-    caver.klay
-      .sendTransaction({
-        from: myAddress,
-        to: "0xf1d5414B34b3316d4A0A0b57aA51a649BB7b4c7b",
-        data: NFTContract.methods
-          .setApprovalForAll("0xf1d5414B34b3316d4A0A0b57aA51a649BB7b4c7b", true)
-          .encodeABI(),
-        gas: "300000",
-      })
-      .once("receipt", (receipt) => {
-        console.log("receipt", receipt);
-      })
-      .once("error", (error) => {
-        console.log("error", error);
-      });
-  };
-
   const rewardToken = async () => {
-    const balance = await StakeContract.methods.calcTokens(myAddress).call();
-
+    const balance = await StakeContract.methods.calcTokens(userAddress).call();
     setRewardTokens(balance / 10 ** 18);
   };
 
@@ -151,22 +162,20 @@ const Staking = () => {
           width: "100%",
         }}
       >
-        <span style={{ fontSize: 20 }}> Address : {myAddress}</span>
+        <span style={{ fontSize: 20 }}> Address : {userAddress}</span>
         <span style={{ fontSize: 20 }}> Reward Token : {rewardTokens} CG</span>
         <Button
           variant="info"
           onClick={claim}
-          style={{ width: 100, borderRadius: "20px" }}
+          style={{
+            width: 100,
+            borderRadius: "20px",
+            border: "1px solid black",
+          }}
         >
           claim
         </Button>
-        <Button
-          variant="info"
-          onClick={test}
-          style={{ width: 100, borderRadius: "20px" }}
-        >
-          test
-        </Button>
+
         <h1>Stake</h1>
         <Row>
           {stakeNfts.map((stakeNft) => (

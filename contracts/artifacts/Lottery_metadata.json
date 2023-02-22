@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.7+commit.e28d00a7"
+		"version": "0.8.17+commit.8df45f5f"
 	},
 	"language": "Solidity",
 	"output": {
@@ -438,11 +438,11 @@
 			]
 		},
 		"contracts/Lotto.sol": {
-			"keccak256": "0xa02a256ea172666daa58f83c3b991e27dd1c2d515c60ec1c4154c33e87412da9",
+			"keccak256": "0x3f980f22d139845ed30170287aff254972101b92378d9f434bb30da7afcf2704",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://45fab7a81291bfc58ecdbcda2b237eadec583674343784ed32fb7005d2e66c7b",
-				"dweb:/ipfs/QmePnFAE4L2WShLszeNrk5eBj1RRYJAZvEMfvL5Pmkjt25"
+				"bzz-raw://bf59ae71255ab58bdf74616ccae14c444a97a1b0f9d44919290c01f6538997c9",
+				"dweb:/ipfs/QmcNBL5NCyTao7nCJLAJpkKb4DcnaCPVU2CYjKmP4B2HaM"
 			]
 		}
 	},

@@ -1,28 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./ToggleButton.css";
 
 const ToggleButtons = (props) => {
   const [selectedButtons, setSelectedButtons] = useState([]);
 
+  useEffect(() => {
+    props.setNumbers(selectedButtons);
+  }, [selectedButtons, props]);
+
   const handleClick = (button) => {
     if (selectedButtons.includes(button)) {
       setSelectedButtons(selectedButtons.filter((b) => b !== button));
-    } else if (selectedButtons.length < 5) {
+    } else if (selectedButtons.length < 6) {
       setSelectedButtons([...selectedButtons, button]);
     }
-
-    props.setNumbers(selectedButtons);
-    console.log(selectedButtons);
   };
 
   return (
     <div
       className="toggle-button-container"
       style={{
-        margin: "50px",
         padding: "50px",
-        width: "500px",
         display: "grid",
         gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
       }}
@@ -31,11 +30,11 @@ const ToggleButtons = (props) => {
         <button
           key={button}
           className={`toggle-button ${
-            selectedButtons.includes(button) ? "active" : ""
+            selectedButtons.includes(button + 1) ? "active" : ""
           }`}
-          onClick={() => handleClick(button)}
+          onClick={() => handleClick(button + 1)}
           disabled={
-            selectedButtons.length >= 5 && !selectedButtons.includes(button)
+            selectedButtons.length >= 6 && !selectedButtons.includes(button + 1)
           }
         >
           {button + 1}

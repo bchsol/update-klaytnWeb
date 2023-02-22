@@ -5,9 +5,6 @@ import Mint from "./pages/Mint";
 import Staking from "./pages/Staking";
 import Lottery from "./pages/Lottery";
 
-import Market from "./pages/Market";
-import Test from "./pages/Test";
-
 function App() {
   return (
     <>
@@ -18,7 +15,6 @@ function App() {
         <Route path="/mint" element={<Mint />} />
         <Route path="/staking" element={<Staking />} />
         <Route path="/Lottery" element={<Lottery />} />
-        <Route path="/test" element={<Test />} />
       </Routes>
     </>
   );

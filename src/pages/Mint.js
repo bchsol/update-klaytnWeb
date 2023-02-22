@@ -3,19 +3,21 @@ import { caver, NFTContract } from "../caver/UseCaver";
 import * as s from "../Style/globalStyles";
 import { ProgressBar, Button, Modal } from "react-bootstrap";
 
+import { connectWallet } from "./Login.js";
+
 global.Buffer = global.Buffer || require("buffer").Buffer; //webpack5 error
 
 const feePayerPrivateKey =
   "0x1f06cc0b3f89e66ef9685ef8292e9c29061564ab3c8c29a0eef14a85c947bdc0";
 
 function Mint() {
-  const [address, setAddress] = useState(
-    window.sessionStorage.getItem("address") || ""
-  );
-
-  const [connectButton, setConnectButton] = useState(
-    window.sessionStorage.getItem("connectbtn") || "Connect Wallet"
-  );
+  const userAddress = localStorage.getItem("userAddress");
+  // const [address, setAddress] = useState(
+  //   window.sessionStorage.getItem("user") || ""
+  // );
+  // const [connectButton, setConnectButton] = useState(
+  //   window.sessionStorage.getItem("connectbtn") || "Connect Wallet"
+  // );
 
   const [mintAmount, setMintAmount] = useState(1);
   const [totalSupply, setTotalSupply] = useState(0);
@@ -25,12 +27,13 @@ function Mint() {
   const [modalContent, setModalContent] = useState("");
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       let totalSupply = await NFTContract.methods.totalSupply().call();
-      // console.log("Total Supply: " + totalSupply);
-      // console.log("Connected with contract");
       setTotalSupply(totalSupply);
-    })();
+    };
+
+    fetchData();
+    connectWallet();
   }, [NFTContract.methods]);
 
   const handleMint = async () => {
@@ -58,9 +61,9 @@ function Mint() {
         // senderRawTransaction: senderRawTransaction,
         // feePayer: feePayer.address,
         type: "SMART_CONTRACT_EXECUTION",
-        from: address,
+        from: userAddress,
         to: NFTContract._address,
-        data: NFTContract.methods.mint(address, mintAmount).encodeABI(),
+        data: NFTContract.methods.mint(userAddress, mintAmount).encodeABI(),
         value: 0,
         gas: "300000",
       })
@@ -85,44 +88,13 @@ function Mint() {
   };
 
   const handleDecrement = () => {
-    if ((mintAmount = 1)) return;
+    if (mintAmount <= 1) return;
     setMintAmount(mintAmount - 1);
   };
 
   const handleIncrement = () => {
-    if ((mintAmount = 1)) return;
     setMintAmount(mintAmount + 1);
   };
-
-  const connectWallet = async () => {
-    if (window.klaytn) {
-      if (window.klaytn.networkVersion === 1001) {
-        const tempAccounts = await window.klaytn.enable();
-        window.sessionStorage.setItem("address", tempAccounts[0]);
-        window.sessionStorage.setItem("connectbtn", tempAccounts[0]);
-        setAddress(tempAccounts[0]);
-        setConnectButton(tempAccounts[0]);
-      } else if (window.klaytn.networkVersion === 8217) {
-        setModalHeader("Network Error");
-        setModalContent("Change to Baobab");
-        setShowModal(true);
-      }
-
-      console.log("Connected Kaikas");
-    } else {
-      setModalHeader("Not Kaikas");
-      setModalContent("Please Install Kaikas");
-      setShowModal(true);
-    }
-  };
-
-  useEffect(() => {
-    if (window.klaytn?.selectedAddress) {
-      return;
-    } else {
-      connectWallet();
-    }
-  }, []);
 
   return (
     <s.Screen>
@@ -168,9 +140,7 @@ function Mint() {
             >
               NFT Mint
             </span>
-            <Button variant="outline-dark" onClick={connectWallet}>
-              <span>{connectButton}</span>
-            </Button>
+            <p>{userAddress}</p>
           </div>
           <div
             className="card-middle"
