@@ -4,13 +4,16 @@
 
 ## Page
 - Home
+ 
   [ ] Home에서 바로 지갑연결
   
 - Staking
+ 
   [ ] RPC Error 해결
   [ ] 웹 디자인 정리
   
 -Lottery
+
   [x] 현재 라운드 정보 표시
   [x] 티켓 구매 Modal
   [x] 티켓 구매 트랜잭션 
