@@ -4,7 +4,7 @@
 
 ## Page
 - Home
-- [ ] Home에서 바로 지갑연결
+  - [ ] Home에서 바로 지갑연결
   
 - Staking
  
