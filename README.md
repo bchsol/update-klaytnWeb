@@ -26,4 +26,5 @@
   
   - [ ] staking과 token 분리하기
   
-  - [ ] interface 만
+  - [ ] interface 만들기
+
