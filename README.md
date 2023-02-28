@@ -9,6 +9,7 @@
 - Staking
  
   - [ ] RPC Error 해결
+  
   - [ ] 웹 디자인 정리
   
 - Lottery
@@ -22,3 +23,7 @@
 ## Contract
 
   - [ ] 필요한 함수들 추가 ex) Owner
+  
+  - [ ] staking과 token 분리하기
+  
+  - [ ] interface 만
