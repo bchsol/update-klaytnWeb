@@ -2,11 +2,12 @@ import axios from "axios";
 import { NFTContract, StakeContract, caver } from "./UseCaver";
 
 const fetchMetadata = async (tokenId) => {
+  const tokenName = await NFTContract.methods.name().call();
   const metadataUrl = await NFTContract.methods.tokenURI(tokenId).call();
   const response = await axios.get(
     `https://gateway.moralisipfs.com/ipfs/${metadataUrl.substring(7)}`
   );
-  return response.data;
+  return tokenName, response.data;
 };
 
 export const fetchStakeNfts = async (address) => {
@@ -24,6 +25,8 @@ export const fetchStakeNfts = async (address) => {
       };
     })
   );
+
+  console.log("stakeNfts", stakeNfts);
 
   return stakeNfts;
 };
@@ -47,6 +50,8 @@ export const fetchNfts = async (address) => {
       };
     })
   );
+
+  console.log("fetchNfts", nfts);
 
   return nfts;
 };

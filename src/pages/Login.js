@@ -8,8 +8,10 @@ export const connectWallet = async () => {
     if (window.klaytn.networkVersion === 1001) {
       // baobab
       console.log("kaikas enable");
-      const wallet = await window.klaytn.enable();
-      localStorage.setItem("userAddress", wallet[0]);
+      var wallet = await window.klaytn.enable();
+      if (localStorage.getItem("userAddress") == null) {
+        localStorage.setItem("userAddress", wallet[0]);
+      }
     }
   }
 };

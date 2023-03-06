@@ -10,35 +10,27 @@ const Staking = () => {
   const [stakeNfts, setStakeNfts] = useState([]);
   const [rewardTokens, setRewardTokens] = useState(0);
 
-  const [userAddress, setUserAddress] = useState("");
+  const userAddress = localStorage.getItem("userAddress");
 
   useEffect(() => {
-    const currentAddress = window.klaytn.selectedAddress;
-    if (userAddress !== currentAddress) {
-      setUserAddress(currentAddress);
-      localStorage.setItem("userAddress", currentAddress);
-    }
-  }, [userAddress]);
+    fetchMyNfts();
+    rewardToken();
+  }, []);
 
-  const fetchMyNfts = useCallback(async () => {
+  const fetchMyNfts = async () => {
     const [_nfts, _stakeNfts] = await Promise.all([
       fetchNfts(userAddress),
       fetchStakeNfts(userAddress),
     ]);
     setNfts(_nfts);
     setStakeNfts(_stakeNfts);
-  }, [userAddress]);
-
-  useEffect(() => {
-    if (userAddress !== "") {
-      fetchMyNfts();
-      rewardToken();
-    }
-  }, [fetchMyNfts]);
+    // fetchStakeNft에서 RPC에러
+    // 호출 자주하니 오류나옴
+  };
 
   const approveNFT = async () => {
     const approve = await NFTContract.methods
-      .isApprovedForAll(StakeContract._address, userAddress)
+      .isApprovedForAll(userAddress, StakeContract._address)
       .call();
 
     if (!approve) {
@@ -53,63 +45,34 @@ const Staking = () => {
     }
   };
 
-  const executeTransaction = (contract, method, encodeABI, gas = "300000") => {
-    return caver.klay.sendTransaction({
-      type: "SMART_CONTRACT_EXECUTE",
-      from: userAddress,
-      to: contract._address,
-      data: method.encodeABI(),
-      gas,
-    });
-  };
+  // const executeTransaction = (contract, method, encodeABI, gas = "300000") => {
+  //   return caver.klay.sendTransaction({
+  //     type: "SMART_CONTRACT_EXECUTE",
+  //     from: userAddress,
+  //     to: contract._address,
+  //     data: method.encodeABI(),
+  //     gas,
+  //   });
+  // };
 
   const stake = async (tokenId) => {
-    // const approve = await NFTContract.methods
-    //   .isApprovedForAll(StakeContract._address, userAddress)
-    //   .call();
-
-    await approveNFT();
-
-    return executeTransaction(
-      StakeContract,
-      StakeContract.methods.stake(tokenId),
-      "SMART_CONTRACT_EXECUTION"
-    );
-
-    // if (!approve) {
-    //   // Approval Contract
-    //   caver.klay
-    //     .sendTransaction({
-    //       from: userAddress,
-    //       to: NFTContract._address,
-    //       data: NFTContract.methods
-    //         .setApprovalForAll(StakeContract._address, true)
-    //         .encodeABI(),
-    //       gas: "300000",
-    //     })
-    //     .once("receipt", (receipt) => {
-    //       console.log("receipt", receipt);
-    //     })
-    //     .once("error", (error) => {
-    //       console.log("error", error);
-    //     });
-    //}
+    approveNFT();
 
     // Stake Contract
-    // caver.klay
-    //   .sendTransaction({
-    //     type: "SMART_CONTRACT_EXECUTION",
-    //     from: userAddress,
-    //     to: StakeContract._address,
-    //     data: StakeContract.methods.stake(tokenId).encodeABI(),
-    //     gas: "300000",
-    //   })
-    //   .once("receipt", (receipt) => {
-    //     console.log("receipt", receipt);
-    //   })
-    //   .once("error", (error) => {
-    //     console.log("error", error);
-    //   });
+    caver.klay
+      .sendTransaction({
+        type: "SMART_CONTRACT_EXECUTION",
+        from: userAddress,
+        to: StakeContract._address,
+        data: StakeContract.methods.stake(tokenId).encodeABI(),
+        gas: "300000",
+      })
+      .once("receipt", (receipt) => {
+        console.log("receipt", receipt);
+      })
+      .once("error", (error) => {
+        console.log("error", error);
+      });
   };
 
   const unstake = async (tokenId) => {

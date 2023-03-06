@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.7+commit.e28d00a7"
+		"version": "0.8.18+commit.87f61d96"
 	},
 	"language": "Solidity",
 	"output": {
@@ -106,25 +106,6 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "previousOwner",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "newOwner",
-						"type": "address"
-					}
-				],
-				"name": "OwnershipTransferred",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
 						"name": "from",
 						"type": "address"
 					},
@@ -145,16 +126,16 @@
 				"type": "event"
 			},
 			{
-				"inputs": [
+				"inputs": [],
+				"name": "accessControls",
+				"outputs": [
 					{
-						"internalType": "address",
-						"name": "user",
+						"internalType": "contract ContractAccessControl",
+						"name": "",
 						"type": "address"
 					}
 				],
-				"name": "addWhitelist",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -411,19 +392,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -466,13 +434,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "renounceOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -789,19 +750,6 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "newOwner",
-						"type": "address"
-					}
-				],
-				"name": "transferOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
 						"name": "_owner",
 						"type": "address"
 					}
@@ -832,6 +780,17 @@
 			}
 		],
 		"devdoc": {
+			"events": {
+				"Approval(address,address,uint256)": {
+					"details": "Emitted when `owner` enables `approved` to manage the `tokenId` token."
+				},
+				"ApprovalForAll(address,address,bool)": {
+					"details": "Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets."
+				},
+				"Transfer(address,address,uint256)": {
+					"details": "Emitted when `tokenId` token is transferred from `from` to `to`."
+				}
+			},
 			"kind": "dev",
 			"methods": {
 				"approve(address,uint256)": {
@@ -849,14 +808,8 @@
 				"name()": {
 					"details": "See {IKIP17Metadata-name}."
 				},
-				"owner()": {
-					"details": "Returns the address of the current owner."
-				},
 				"ownerOf(uint256)": {
 					"details": "See {IKIP17-ownerOf}."
-				},
-				"renounceOwnership()": {
-					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
 				},
 				"safeTransferFrom(address,address,uint256)": {
 					"details": "See {IKIP17-safeTransferFrom}."
@@ -887,9 +840,6 @@
 				},
 				"transferFrom(address,address,uint256)": {
 					"details": "See {IKIP17-transferFrom}."
-				},
-				"transferOwnership(address)": {
-					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
 				}
 			},
 			"version": 1
@@ -904,7 +854,7 @@
 		"compilationTarget": {
 			"contracts/CoffeeBeansNFT.sol": "CoffeeBeansNFT"
 		},
-		"evmVersion": "london",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -988,12 +938,20 @@
 				"dweb:/ipfs/QmeaBqThx2gmgG4HrR6Uk6Xjcyx5kUs2SSRMK4nkUZRVX6"
 			]
 		},
-		"@klaytn/contracts/contracts/access/Ownable.sol": {
-			"keccak256": "0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9",
+		"@klaytn/contracts/contracts/access/AccessControl.sol": {
+			"keccak256": "0x3320df3db66375139e51825d1e0055c6236a26ce0dee4afe9cbd2da09fcd66b3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e12cbaa7378fd9b62280e4e1d164bedcb4399ce238f5f98fc0eefb7e50577981",
-				"dweb:/ipfs/QmXRoFGUgfsaRkoPT5bxNMtSayKTQ8GZATLPXf69HcRA51"
+				"bzz-raw://9c0a0c950f31cbfa7c2fb02f962c667ce12e4e1149a92bdc1df2ab547e405bd8",
+				"dweb:/ipfs/QmdwL4PuCXoLes5vfmGFVSRFe44ZcE7v14tBr1x9XzNjyJ"
+			]
+		},
+		"@klaytn/contracts/contracts/access/IAccessControl.sol": {
+			"keccak256": "0x59ce320a585d7e1f163cd70390a0ef2ff9cec832e2aa544293a00692465a7a57",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://bb2c137c343ef0c4c7ce7b18c1d108afdc9d315a04e48307288d2d05adcbde3a",
+				"dweb:/ipfs/QmUxhrAQM3MM3FF5j7AtcXLXguWCJBHJ14BRdVtuoQc8Fh"
 			]
 		},
 		"@klaytn/contracts/contracts/token/ERC721/IERC721Receiver.sol": {
@@ -1028,12 +986,36 @@
 				"dweb:/ipfs/QmQV6pF3FQoqR16kSK9FNg6bKfWLbcfHBTCKS7p2ERTkEF"
 			]
 		},
-		"contracts/CoffeeBeansNFT.sol": {
-			"keccak256": "0x3ad141649f68fa709366f11dc0722e60e17ffc533a05da70f5d07ae60ddec108",
+		"@klaytn/contracts/contracts/utils/introspection/ERC165.sol": {
+			"keccak256": "0xd10975de010d89fd1c78dc5e8a9a7e7f496198085c151648f20cba166b32582b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://240cdd305c65a387bbf9045d2b871da4353b37ffa4af6f28a60f77d2e5a6882e",
-				"dweb:/ipfs/QmbnAozGSbdqAWDq8xy9fBRb8RpZJvDKEJ1p2C2rqun7aX"
+				"bzz-raw://fb0048dee081f6fffa5f74afc3fb328483c2a30504e94a0ddd2a5114d731ec4d",
+				"dweb:/ipfs/QmZptt1nmYoA5SgjwnSgWqgUSDgm4q52Yos3xhnMv3MV43"
+			]
+		},
+		"@klaytn/contracts/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f",
+				"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy"
+			]
+		},
+		"contracts/CoffeeBeansNFT.sol": {
+			"keccak256": "0x45f3687299756bf0c2abfd14867e2b6df49837acacb20f02d3109a76b5dbfd84",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9da9ad5cce727559617f8b646bf90a5695c763ed4bae8031b40093e231ec2ead",
+				"dweb:/ipfs/QmWCnqfJAH1oeWfKxB2ZkcYaFv3gJfTRK5LjbXHC4TJXai"
+			]
+		},
+		"contracts/ContractAccessControl.sol": {
+			"keccak256": "0xaf99263a244d5c40138315c62cc0fbe3b915d3ece91fbe78a217c995dbc08978",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://eb048f8d072df0de01243a3f3d15a8a8852ee748f6854423c6114395954434b5",
+				"dweb:/ipfs/QmUWCqwFB8LFJXTobtCkCAANpzqN5cQHJXFMkSDhY6vS4x"
 			]
 		}
 	},

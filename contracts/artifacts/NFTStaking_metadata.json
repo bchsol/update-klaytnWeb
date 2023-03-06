@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.7+commit.e28d00a7"
+		"version": "0.8.18+commit.87f61d96"
 	},
 	"language": "Solidity",
 	"output": {
@@ -8,92 +8,23 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "_name",
-						"type": "string"
+						"internalType": "address",
+						"name": "_nft",
+						"type": "address"
 					},
 					{
-						"internalType": "string",
-						"name": "_symbol",
-						"type": "string"
+						"internalType": "address",
+						"name": "_rewardToken",
+						"type": "address"
 					},
 					{
-						"internalType": "string",
-						"name": "_initBaseURI",
-						"type": "string"
+						"internalType": "uint256",
+						"name": "_rate",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "approved",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "Approval",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "operator",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "bool",
-						"name": "approved",
-						"type": "bool"
-					}
-				],
-				"name": "ApprovalForAll",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "_to",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "Klaytn17Burn",
-				"type": "event"
 			},
 			{
 				"anonymous": false,
@@ -118,36 +49,68 @@
 				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": true,
+						"indexed": false,
 						"internalType": "address",
-						"name": "from",
+						"name": "user",
 						"type": "address"
 					},
 					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"indexed": true,
+						"indexed": false,
 						"internalType": "uint256",
-						"name": "tokenId",
+						"name": "reward",
 						"type": "uint256"
 					}
 				],
-				"name": "Transfer",
+				"name": "RewardPaid",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Staked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Unstaked",
 				"type": "event"
 			},
 			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "_user",
 						"type": "address"
 					}
 				],
-				"name": "addressMintedBalance",
+				"name": "calculateRewards",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -162,35 +125,11 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "_user",
 						"type": "address"
 					}
 				],
-				"name": "addressTimedlay",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "approve",
+				"name": "claimRewards",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -199,16 +138,16 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "owner",
+						"name": "_user",
 						"type": "address"
 					}
 				],
-				"name": "balanceOf",
+				"name": "getStakedTokens",
 				"outputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
+						"internalType": "uint256[]",
+						"name": "tokenIds",
+						"type": "uint256[]"
 					}
 				],
 				"stateMutability": "view",
@@ -216,42 +155,10 @@
 			},
 			{
 				"inputs": [],
-				"name": "baseExtension",
+				"name": "nft",
 				"outputs": [
 					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "baseURI",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "getApproved",
-				"outputs": [
-					{
-						"internalType": "address",
+						"internalType": "contract IKIP17Enumerable",
 						"name": "",
 						"type": "address"
 					}
@@ -263,94 +170,34 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "owner",
+						"name": "",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "operator",
-						"type": "address"
-					}
-				],
-				"name": "isApprovedForAll",
-				"outputs": [
-					{
-						"internalType": "bool",
 						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "maxMintAmount",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "maxSupply",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_to",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "_mintAmount",
-						"type": "uint256"
-					}
-				],
-				"name": "mint",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "mintPrice",
-				"outputs": [
-					{
-						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "name",
+				"name": "onKIP17Received",
 				"outputs": [
 					{
-						"internalType": "string",
+						"internalType": "bytes4",
 						"name": "",
-						"type": "string"
+						"type": "bytes4"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -367,45 +214,13 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
+				"inputs": [],
+				"name": "rate",
+				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "tokenId",
+						"name": "",
 						"type": "uint256"
-					}
-				],
-				"name": "ownerOf",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bool",
-						"name": "_state",
-						"type": "bool"
-					}
-				],
-				"name": "pause",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "paused",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
 					}
 				],
 				"stateMutability": "view",
@@ -419,254 +234,97 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "safeTransferFrom",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bytes",
-						"name": "_data",
-						"type": "bytes"
-					}
-				],
-				"name": "safeTransferFrom",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "operator",
-						"type": "address"
-					},
-					{
-						"internalType": "bool",
-						"name": "approved",
-						"type": "bool"
-					}
-				],
-				"name": "setApprovalForAll",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_newBaseExtension",
-						"type": "string"
-					}
-				],
-				"name": "setBaseExtension",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_newBaseURI",
-						"type": "string"
-					}
-				],
-				"name": "setBaseURI",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_newMintPrice",
-						"type": "uint256"
-					}
-				],
-				"name": "setCost",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_newmaxMintAmount",
-						"type": "uint256"
-					}
-				],
-				"name": "setmaxMintAmount",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes4",
-						"name": "interfaceId",
-						"type": "bytes4"
-					}
-				],
-				"name": "supportsInterface",
+				"inputs": [],
+				"name": "rewardToken",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "contract IKIP7",
 						"name": "",
-						"type": "bool"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_rate",
+						"type": "uint256"
+					}
+				],
+				"name": "setRewardRate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "stake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "symbol",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "tokenByIndex",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "tokenOfOwnerByIndex",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "tokenURI",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "totalSupply",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "transferFrom",
+				"name": "stakeAll",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "stakers",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenStakeAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "unclaimedRewards",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "tokenOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -685,31 +343,19 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_owner",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
 					}
 				],
-				"name": "walletOfOwner",
-				"outputs": [
-					{
-						"internalType": "uint256[]",
-						"name": "",
-						"type": "uint256[]"
-					}
-				],
-				"stateMutability": "view",
+				"name": "unstake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address payable",
-						"name": "toAdress",
-						"type": "address"
-					}
-				],
-				"name": "withdraw",
+				"inputs": [],
+				"name": "unstakeAll",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -718,59 +364,14 @@
 		"devdoc": {
 			"kind": "dev",
 			"methods": {
-				"approve(address,uint256)": {
-					"details": "See {IKIP17-approve}."
-				},
-				"balanceOf(address)": {
-					"details": "See {IKIP17-balanceOf}."
-				},
-				"getApproved(uint256)": {
-					"details": "See {IKIP17-getApproved}."
-				},
-				"isApprovedForAll(address,address)": {
-					"details": "See {IKIP17-isApprovedForAll}."
-				},
-				"name()": {
-					"details": "See {IKIP17Metadata-name}."
+				"onKIP17Received(address,address,uint256,bytes)": {
+					"details": "See {IKIP17Receiver-onERC721Received}. Always returns `IIKIP17Receiver.onKIP17Received.selector`."
 				},
 				"owner()": {
 					"details": "Returns the address of the current owner."
 				},
-				"ownerOf(uint256)": {
-					"details": "See {IKIP17-ownerOf}."
-				},
 				"renounceOwnership()": {
 					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
-				},
-				"safeTransferFrom(address,address,uint256)": {
-					"details": "See {IKIP17-safeTransferFrom}."
-				},
-				"safeTransferFrom(address,address,uint256,bytes)": {
-					"details": "See {IKIP17-safeTransferFrom}."
-				},
-				"setApprovalForAll(address,bool)": {
-					"details": "See {IKIP17-setApprovalForAll}."
-				},
-				"supportsInterface(bytes4)": {
-					"details": "See {IKIP13-supportsInterface}."
-				},
-				"symbol()": {
-					"details": "See {IKIP17Metadata-symbol}."
-				},
-				"tokenByIndex(uint256)": {
-					"details": "See {IKIP17Enumerable-tokenByIndex}."
-				},
-				"tokenOfOwnerByIndex(address,uint256)": {
-					"details": "See {IKIP17Enumerable-tokenOfOwnerByIndex}."
-				},
-				"tokenURI(uint256)": {
-					"details": "See {IKIP17Metadata-tokenURI}."
-				},
-				"totalSupply()": {
-					"details": "See {IKIP17Enumerable-totalSupply}."
-				},
-				"transferFrom(address,address,uint256)": {
-					"details": "See {IKIP17-transferFrom}."
 				},
 				"transferOwnership(address)": {
 					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
@@ -779,8 +380,47 @@
 			"version": 1
 		},
 		"userdoc": {
+			"events": {
+				"RewardPaid(address,uint256)": {
+					"notice": "event emitted when a user claims reward"
+				},
+				"Staked(address,uint256)": {
+					"notice": "event emitted when a user has staked a token"
+				},
+				"Unstaked(address,uint256)": {
+					"notice": "event emitted when a user has unstaked a token"
+				}
+			},
 			"kind": "user",
-			"methods": {},
+			"methods": {
+				"calculateRewards(address)": {
+					"notice": "Function used to calculate the rewards for a user."
+				},
+				"claimRewards(address)": {
+					"notice": "Function used to claim the accrued KIP7 Reward Tokens."
+				},
+				"getStakedTokens(address)": {
+					"notice": "Get the tokens staked by a user"
+				},
+				"stake(uint256)": {
+					"notice": "Function used to stake KIP17 Token"
+				},
+				"stakeAll()": {
+					"notice": "Function used to stake all your NFTs"
+				},
+				"stakers(address)": {
+					"notice": "mapping of a staker to its current properties"
+				},
+				"tokenOwner(uint256)": {
+					"notice": "Mapping from token ID to owner address"
+				},
+				"unstake(uint256)": {
+					"notice": "Function used to unstake KIP17 Token"
+				},
+				"unstakeAll()": {
+					"notice": "Function used to unstake all your NFTs"
+				}
+			},
 			"version": 1
 		}
 	},
@@ -788,7 +428,7 @@
 		"compilationTarget": {
 			"contracts/NFTStaking.sol": "NFTStaking"
 		},
-		"evmVersion": "london",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -856,6 +496,46 @@
 				"dweb:/ipfs/QmbgSkxsucBV4qAjj56gmiGF5PMUhxQKbcTqufw2RJhfhf"
 			]
 		},
+		"@klaytn/contracts/contracts/KIP/token/KIP17/utils/KIP17Holder.sol": {
+			"keccak256": "0x0d8153d87d534dbcd6c3b2b0fb1a43e55b8f3d21287976231ee938e168d621fa",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3fe1d8375e8632de0e92c0e7bd358acfdcfe7dbc40bd56b38b9cc12287d149ab",
+				"dweb:/ipfs/QmU3t7DetXARJFuqd1v2VYDvj9yYmjnyqwYbJkv2U2JvLV"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP7/IKIP7.sol": {
+			"keccak256": "0x9ad208086b69dffd327a65877e2304ff51b111e7303ef415ff01fd884c714a51",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1ba07be24ca6b3f976160c3351ecc064e56ec47be4c12cba0c693219130bfba2",
+				"dweb:/ipfs/QmR3FykeTjeSedaU8cSvfRoJ7bMscoWvP5FWtu1sfzHXCo"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP7/IKIP7Receiver.sol": {
+			"keccak256": "0x67261ba02258b78860bff7a0a955474f7831d6bb00d7027859b63e0ff1f05a4a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://aacb28d196440a8cde1383f8c988992d5842ca610f2cb13b7f79aae15feb9176",
+				"dweb:/ipfs/Qma7fkd2hm9Yho8Jbjb2mp52ziawEiPFpfA6qNEZfp9rwm"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP7/KIP7.sol": {
+			"keccak256": "0xde01718d859b8e57bd008f20483865fdb994d3a1503c63186ea5e48af3295caf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5fa08f1ee8827f793d242502355326f70136ebab5ca18a936f65223f0c1ef677",
+				"dweb:/ipfs/QmctuB35eSoSEz7hMEWwwF3Qi2YKXCmqPQLFUbTqcPGFox"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP7/extensions/IKIP7Metadata.sol": {
+			"keccak256": "0xe4687748e1b4c29a35ffbebd8b7fa7e79f6473448d6cf014bd61c93666594151",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8fb4d882f8780e6f51caee73f6b2ba93cad088d53df5c02f511368942c605f79",
+				"dweb:/ipfs/QmZqbEf94MFocmaMPN2sSyUbRTEmvqmRAKTdxxnFkE9u4L"
+			]
+		},
 		"@klaytn/contracts/contracts/KIP/utils/introspection/IKIP13.sol": {
 			"keccak256": "0xb63277576f18a3a05c2ec7736bbb7b4a0bd0d12bbd823a4751144d60273a2c46",
 			"license": "MIT",
@@ -913,11 +593,11 @@
 			]
 		},
 		"contracts/NFTStaking.sol": {
-			"keccak256": "0x0a080b28443bb0f3e7d13d3bd1bbd0d1d8aaaa6d51f93b7d83f8c3ed188b0430",
+			"keccak256": "0xba496c75312ffee1bab8bb8c495d909646bcbd9dc2a22c10aca1eaaa74752aa7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7d970bbb1893b19f34875709f9cdfef47e81506903f466b8d85aa7573dc04a9e",
-				"dweb:/ipfs/QmbNDpZFwSduhucMvbXG5dr6FQArVZ1JNeUdB1yYxsdS8Q"
+				"bzz-raw://c1e0a46baca8bfae2669f5f0f7c43843f2ebf175278c95333d97e31f9033c2a8",
+				"dweb:/ipfs/QmUWvxUkVDU6k9AkoZBqQHdNW3ni1Hc9i6jpwh2q3vYxbT"
 			]
 		}
 	},

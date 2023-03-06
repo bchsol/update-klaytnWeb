@@ -1,0 +1,539 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_nft",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_rewardToken",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "reward",
+						"type": "uint256"
+					}
+				],
+				"name": "RewardPaid",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Staked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Unstaked",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					}
+				],
+				"name": "calculateRewards",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					}
+				],
+				"name": "claimRewards",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					}
+				],
+				"name": "getStakedTokens",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "tokenIds",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "maxSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "nft",
+				"outputs": [
+					{
+						"internalType": "contract IKIP17Enumerable",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onKIP17Received",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rewardToken",
+				"outputs": [
+					{
+						"internalType": "contract IKIP7",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "stake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stakeAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "stakers",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenStakeAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "unclaimedRewards",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "tokenOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "unstake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "unstakeAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"onKIP17Received(address,address,uint256,bytes)": {
+					"details": "See {IKIP17Receiver-onERC721Received}. Always returns `IIKIP17Receiver.onKIP17Received.selector`."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"events": {
+				"RewardPaid(address,uint256)": {
+					"notice": "event emitted when a user claims reward"
+				},
+				"Staked(address,uint256)": {
+					"notice": "event emitted when a user has staked a token"
+				},
+				"Unstaked(address,uint256)": {
+					"notice": "event emitted when a user has unstaked a token"
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"calculateRewards(address)": {
+					"notice": "Function used to calculate the rewards for a user."
+				},
+				"claimRewards(address)": {
+					"notice": "Function used to claim the accrued KIP7 Reward Tokens."
+				},
+				"getStakedTokens(address)": {
+					"notice": "Get the tokens staked by a user"
+				},
+				"stake(uint256)": {
+					"notice": "Function used to stake KIP17 Token"
+				},
+				"stakeAll()": {
+					"notice": "Function used to stake all your NFTs"
+				},
+				"stakers(address)": {
+					"notice": "mapping of a staker to its current properties"
+				},
+				"tokenOwner(uint256)": {
+					"notice": "Mapping from token ID to owner address"
+				},
+				"unstake(uint256)": {
+					"notice": "Function used to unstake KIP17 Token"
+				},
+				"unstakeAll()": {
+					"notice": "Function used to unstake all your NFTs"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/TestNFTStaking.sol": "TestNFTStaking"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@klaytn/contracts/contracts/KIP/interfaces/IKIP13.sol": {
+			"keccak256": "0x538533dcc430536d456ae9e781680ca578ce70bab6b2db7cc18422d2babfd030",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2138a452ed0d0e65ec203a3b4cc610c065b8072efdd3d7757914c0597f1a08fb",
+				"dweb:/ipfs/QmR5TvG2H5SwbLmDMnbUHfDxxHW6upYLdCbsZtibHVEvEr"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP17/IKIP17.sol": {
+			"keccak256": "0x12805039249aec575fc0ab02485da91649f2740f35eed4c08572c095513cc0d3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://13d039aa7e4cb6338b20b666e6d27301c8f1a0a2ba18f2cd116b5e4ad1268e4b",
+				"dweb:/ipfs/QmXXoYQUpr37DJbgcZHp4TvRYMcBLUG7iMaToAWyfavhUx"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP17/IKIP17Receiver.sol": {
+			"keccak256": "0x6cd2dc3fa3f2656adb92baddde366f99ec6c9db6e06a1e7d9be345050df2b15d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d998f68debfb93aeb3e771fbb6c5e29e18ffa0c80eaa48fae1931dcb1869adbb",
+				"dweb:/ipfs/QmekfbvEgcdstojWrYdN2WeK8vJQgjNVfX9hhquES4hbqn"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP17/KIP17.sol": {
+			"keccak256": "0xf0d3d09792dc1927b44fd220c27823db8e994b3dfecd5cc504f59db66e2518ee",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c4500841321abe41ca4b97dc0905ca449c0f0aca201f9c8a88b7527eb78bbb47",
+				"dweb:/ipfs/QmfRqMkt1uprh4souYWwNteVmGSsmhYthqPwk4zWwA3v6r"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP17/extensions/IKIP17Enumerable.sol": {
+			"keccak256": "0x2776e27768782c72f52b15dd612d5e2a49c87a5d4d6d582cb68bcaa3d5d7dfb3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://868f113a7db6bae1926e424fe10f5d6fc363c914e976a6e49df8e6b23c330353",
+				"dweb:/ipfs/QmPLJNJgGLsquURf1vZfJJHcts8Y9r95u2xWJYXWpEr9L2"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP17/extensions/IKIP17Metadata.sol": {
+			"keccak256": "0x9f063faf0b0f42da2557feaa370cf92996be09899c196dd0b99f99ac4242401e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8246c8d639b26c877e60478e8647bd4d4474be914012f2c00a50ab819fd1cf11",
+				"dweb:/ipfs/QmRqZ9VP9YvbgTYavv6QHJquGHAjyHUhsvb26HD3m9Gx5C"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP17/extensions/KIP17Enumerable.sol": {
+			"keccak256": "0x9415b18f029ca32c84c9be3ff3351bd68019bd59368f75defaa610a0e1c71c45",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://23e4675fa31efb2f6c00193a09a431f9b272bf0b568de29b4b3a915f10f603fd",
+				"dweb:/ipfs/QmbgSkxsucBV4qAjj56gmiGF5PMUhxQKbcTqufw2RJhfhf"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP17/utils/KIP17Holder.sol": {
+			"keccak256": "0x0d8153d87d534dbcd6c3b2b0fb1a43e55b8f3d21287976231ee938e168d621fa",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3fe1d8375e8632de0e92c0e7bd358acfdcfe7dbc40bd56b38b9cc12287d149ab",
+				"dweb:/ipfs/QmU3t7DetXARJFuqd1v2VYDvj9yYmjnyqwYbJkv2U2JvLV"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP7/IKIP7.sol": {
+			"keccak256": "0x9ad208086b69dffd327a65877e2304ff51b111e7303ef415ff01fd884c714a51",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1ba07be24ca6b3f976160c3351ecc064e56ec47be4c12cba0c693219130bfba2",
+				"dweb:/ipfs/QmR3FykeTjeSedaU8cSvfRoJ7bMscoWvP5FWtu1sfzHXCo"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP7/IKIP7Receiver.sol": {
+			"keccak256": "0x67261ba02258b78860bff7a0a955474f7831d6bb00d7027859b63e0ff1f05a4a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://aacb28d196440a8cde1383f8c988992d5842ca610f2cb13b7f79aae15feb9176",
+				"dweb:/ipfs/Qma7fkd2hm9Yho8Jbjb2mp52ziawEiPFpfA6qNEZfp9rwm"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP7/KIP7.sol": {
+			"keccak256": "0xde01718d859b8e57bd008f20483865fdb994d3a1503c63186ea5e48af3295caf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5fa08f1ee8827f793d242502355326f70136ebab5ca18a936f65223f0c1ef677",
+				"dweb:/ipfs/QmctuB35eSoSEz7hMEWwwF3Qi2YKXCmqPQLFUbTqcPGFox"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/token/KIP7/extensions/IKIP7Metadata.sol": {
+			"keccak256": "0xe4687748e1b4c29a35ffbebd8b7fa7e79f6473448d6cf014bd61c93666594151",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8fb4d882f8780e6f51caee73f6b2ba93cad088d53df5c02f511368942c605f79",
+				"dweb:/ipfs/QmZqbEf94MFocmaMPN2sSyUbRTEmvqmRAKTdxxnFkE9u4L"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/utils/introspection/IKIP13.sol": {
+			"keccak256": "0xb63277576f18a3a05c2ec7736bbb7b4a0bd0d12bbd823a4751144d60273a2c46",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3d5b38071876acadb51cd31254f6eefa30d9240c21b531bdb89648f7475231fd",
+				"dweb:/ipfs/QmVvkB9Uwwdq2QJp1uU6eJrcetmaU9zdcNvdg2z9zRmy9e"
+			]
+		},
+		"@klaytn/contracts/contracts/KIP/utils/introspection/KIP13.sol": {
+			"keccak256": "0x9efe61dd73941b281759ca65eaaa0338c9a4105ba8c5d5c5b4998438830c8ed9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://261ed10e8f4c3c6408f119e62b87acc63413ff3c848c4b415e2a596eda29aacf",
+				"dweb:/ipfs/QmeaBqThx2gmgG4HrR6Uk6Xjcyx5kUs2SSRMK4nkUZRVX6"
+			]
+		},
+		"@klaytn/contracts/contracts/access/Ownable.sol": {
+			"keccak256": "0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e12cbaa7378fd9b62280e4e1d164bedcb4399ce238f5f98fc0eefb7e50577981",
+				"dweb:/ipfs/QmXRoFGUgfsaRkoPT5bxNMtSayKTQ8GZATLPXf69HcRA51"
+			]
+		},
+		"@klaytn/contracts/contracts/token/ERC721/IERC721Receiver.sol": {
+			"keccak256": "0xa82b58eca1ee256be466e536706850163d2ec7821945abd6b4778cfb3bee37da",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6e75cf83beb757b8855791088546b8337e9d4684e169400c20d44a515353b708",
+				"dweb:/ipfs/QmYvPafLfoquiDMEj7CKHtvbgHu7TJNPSVPSCjrtjV8HjV"
+			]
+		},
+		"@klaytn/contracts/contracts/utils/Address.sol": {
+			"keccak256": "0x2ccf9d2313a313d41a791505f2b5abfdc62191b5d4334f7f7a82691c088a1c87",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b3a57d0854b2fdce6ebff933a48dca2445643d1eccfc27f00292e937f26c6a58",
+				"dweb:/ipfs/QmW45rZooS9TqR4YXUbjRbtf2Bpb5ouSarBvfW1LdGprvV"
+			]
+		},
+		"@klaytn/contracts/contracts/utils/Context.sol": {
+			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+			]
+		},
+		"@klaytn/contracts/contracts/utils/Strings.sol": {
+			"keccak256": "0xca92905e1626e8567483de21bc1208284865ed7be71d54ca320a140ac25fd290",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://53c8d5bc6af499853ddf86eb2a6d7448f18a78313a04b8652a83007d04954577",
+				"dweb:/ipfs/QmQV6pF3FQoqR16kSK9FNg6bKfWLbcfHBTCKS7p2ERTkEF"
+			]
+		},
+		"contracts/TestNFTStaking.sol": {
+			"keccak256": "0x63ad347a641b4820f866a8e8e6ec7aee9f895bc54f97e8561171aba36aad4d01",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a677ef7b2e3f2bb61c1f7fcc8af03c39a083409eec4d296aa72128ca8dd29407",
+				"dweb:/ipfs/QmPMK6nnJpMkH2AAGrgu3jAwZ3MNaHy97LPkaLBtxy7595"
+			]
+		}
+	},
+	"version": 1
+}
