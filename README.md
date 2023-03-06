@@ -19,6 +19,8 @@
   - [x] 티켓 구매 Modal
   
   - [x] 티켓 구매 트랜잭션 
+  
+  - [ ] 난수 생성 witnet으로 변경
 
 ## Contract
 
